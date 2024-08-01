@@ -20,7 +20,7 @@ archivesBaseName = 'bserveressentials'
 sourceCompatibility = targetCompatibility = '1.8' // or '11' for Java 11
 
 minecraft {
-    version = '1.16.5-36.2.20'
+    version = '1.16.5'
     mappings channel: 'official', version: '1.16.5'
     runs {
         client {
