@@ -2,12 +2,12 @@ buildscript {
     repositories {
         maven {
             name = 'forge'
-            url = 'https://maven.fastmirror.net/repositories/minecraft/'
+            url = 'https://maven.minecraftforge.net'
         }
         mavenCentral()
     }
     dependencies {
-        classpath 'net.minecraftforge.gradle:ForgeGradle:4.1.14'
+        classpath 'net.minecraftforge.gradle:ForgeGradle:5.1.+'
     }
 }
 
@@ -36,21 +36,10 @@ repositories {
     mavenCentral()
     maven {
         name = 'forge'
-        url = 'https://maven.fastmirror.net/repositories/minecraft/'
+        url = 'https://maven.minecraftforge.net'
     }
 }
 
 dependencies {
     minecraft 'net.minecraftforge:forge:1.16.5-36.2.20'
-    implementation 'commons-io:commons-io:2.8.0'
-    implementation 'com.github.jponge:lzma-java:1.3'
-    implementation 'com.nothome:javaxdelta:2.0.1'
-    implementation 'com.google.code.gson:gson:2.8.6'
-    implementation 'com.google.guava:guava:30.1-jre'
-    implementation 'de.siegmar:fastcsv:2.0.0'
-    implementation 'net.minecraftforge:artifactural:2.0.3'
-    implementation 'org.apache.maven:maven-artifact:3.6.3'
-    implementation 'org.apache.httpcomponents:httpclient:4.5.13'
-    implementation 'net.minecraftforge:srgutils:0.4.1'
-    implementation 'net.minecraftforge:DiffPatch:2.0.5:all'
 }
