@@ -1,6 +1,6 @@
 plugins {
-    id 'net.minecraftforge.gradle' version '5.1.16'
     id 'java'
+    id 'net.minecraftforge.gradle' version '5.1.+'
 }
 
 group = 'com.example.bserveressentials'
@@ -18,6 +18,14 @@ minecraft {
             workingDirectory project.file('run')
         }
     }
+}
+
+repositories {
+    maven {
+        name = 'forge'
+        url = 'https://maven.minecraftforge.net'
+    }
+    mavenCentral()
 }
 
 dependencies {
