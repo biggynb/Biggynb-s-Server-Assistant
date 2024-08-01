@@ -1,0 +1,9 @@
+modLoader="javafml"
+loaderVersion="[36,)"
+license="MIT"
+[[mods]]
+modId="bserveressentials"
+version="1.0.0"
+displayName="BServerEssentials"
+description='A simple Minecraft mod with custom commands'
+authors="Your Name"

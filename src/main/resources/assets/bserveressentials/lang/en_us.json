@@ -1,0 +1,6 @@
+{
+    "command.bserveressentials.spectator": "Changed to Spectator mode",
+    "command.bserveressentials.survival": "Changed to Survival mode",
+    "command.bserveressentials.tplegit.success": "Teleported successfully",
+    "command.bserveressentials.tplegit.player_not_found": "Player not found"
+}
