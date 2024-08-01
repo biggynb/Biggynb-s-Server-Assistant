@@ -1,14 +1,26 @@
-plugins {
-    id 'java'
-    id 'net.minecraftforge.gradle' version '5.1.+'
+buildscript {
+    repositories {
+        maven {
+            name = 'forge'
+            url = 'https://maven.minecraftforge.net'
+        }
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'net.minecraftforge.gradle:ForgeGradle:5.1.+'
+    }
 }
+
+apply plugin: 'net.minecraftforge.gradle'
 
 group = 'com.example.bserveressentials'
 version = '1.0.0'
 archivesBaseName = 'bserveressentials'
 
+sourceCompatibility = targetCompatibility = '1.8' // or '11' for Java 11
+
 minecraft {
-    version = "1.16.5"
+    version = '1.16.5-36.2.20'
     mappings channel: 'official', version: '1.16.5'
     runs {
         client {
@@ -21,11 +33,11 @@ minecraft {
 }
 
 repositories {
+    mavenCentral()
     maven {
         name = 'forge'
         url = 'https://maven.minecraftforge.net'
     }
-    mavenCentral()
 }
 
 dependencies {
