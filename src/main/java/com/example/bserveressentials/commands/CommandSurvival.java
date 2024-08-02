@@ -1,35 +1,34 @@
 package com.example.bserveressentials.commands;
 
-import com.mojang.brigadier.Command;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
-import net.minecraft.commands.CommandSourceStack;
-import net.minecraft.commands.Commands;
-import net.minecraft.network.chat.Component;
-import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.level.GameType;
 import net.minecraft.command.CommandSource;
+import net.minecraft.command.Commands;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.GameType;
-import net.minecraft.server.management.PlayerList;
-import net.minecraft.server.MinecraftServer;
-import net.minecraft.world.server.ServerWorld;
-
 
 public class CommandSurvival {
-    public static void register(CommandDispatcher<CommandSourceStack> dispatcher) {
+    public static void register(CommandDispatcher<CommandSource> dispatcher) {
         dispatcher.register(Commands.literal("survival")
-                .requires(source -> source.hasPermission(2))  // Use the correct permission method
-                .executes(CommandSurvival::execute));
+                .requires(cs -> cs.hasPermission(0))
+                .executes(context -> execute(context)));
     }
 
-    private static int execute(CommandContext<CommandSourceStack> context) throws CommandSyntaxException {
-        ServerPlayer player = context.getSource().getPlayerOrException();  // Use correct method to get player
-        player.setGameMode(GameType.SURVIVAL);
-        player.sendSystemMessage(Component.literal("Changed to Survival mode"));
-        return Command.SINGLE_SUCCESS;
+    private static int execute(CommandContext<CommandSource> context) throws CommandSyntaxException {
+        CommandSource source = context.getSource();
+        Entity entity = source.getEntity();
+
+        if (entity instanceof ServerPlayerEntity) {
+            ServerPlayerEntity player = (ServerPlayerEntity) entity;
+            player.setGameMode(GameType.SURVIVAL);
+            player.sendMessage(new StringTextComponent("Changed to Survival mode"), player.getUUID());
+            return 1;
+        } else {
+            source.sendFailure(new StringTextComponent("This command can only be executed by a player"));
+            return 0;
+        }
     }
 }

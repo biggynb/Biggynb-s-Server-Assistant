@@ -8,29 +8,49 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.minecraftforge.fml.event.lifecycle.FMLDedicatedServerSetupEvent;
+import net.minecraftforge.fml.event.lifecycle.FMLLoadCompleteEvent;
+import net.minecraftforge.fml.event.server.FMLServerStartingEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-@Mod("bserveressentials")
-@EventBusSubscriber(modid = "bserveressentials", bus = Bus.FORGE)
+@Mod(BServerEssentials.MODID)
 public class BServerEssentials {
+    public static final String MODID = "bserveressentials";
+    private static final Logger LOGGER = LogManager.getLogger();
 
     public BServerEssentials() {
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::doClientStuff);
+        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::onLoadComplete);
+        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::onDedicatedServerSetup);
     }
 
     private void setup(final FMLCommonSetupEvent event) {
-        // Initialization code
+        LOGGER.info("HELLO FROM PREINIT");
+        LOGGER.info("DIRT BLOCK >> {}", net.minecraft.block.Blocks.DIRT.getRegistryName());
     }
 
     private void doClientStuff(final FMLClientSetupEvent event) {
-        // Client-side code
+        LOGGER.info("Got game settings");
+    }
+
+    private void onLoadComplete(final FMLLoadCompleteEvent event) {
+        LOGGER.info("Load Complete");
+    }
+
+    private void onDedicatedServerSetup(final FMLDedicatedServerSetupEvent event) {
+        LOGGER.info("Dedicated Server Setup");
     }
 
     @SubscribeEvent
-    public static void onServerStarting(RegisterCommandsEvent event) {
+    public void onServerStarting(FMLServerStartingEvent event) {
+        LOGGER.info("HELLO from server starting");
+    }
+
+    @SubscribeEvent
+    public void registerCommands(RegisterCommandsEvent event) {
         CommandSpectator.register(event.getDispatcher());
         CommandSurvival.register(event.getDispatcher());
         CommandTpLegit.register(event.getDispatcher());
