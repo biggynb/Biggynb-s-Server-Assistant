@@ -1,7 +1,16 @@
 buildscript {
     repositories {
-        maven { url = 'https://maven.minecraftforge.net' }
-        mavenCentral()
+        if (use_mirror == "true") {
+            removeIf {
+                it instanceof MavenArtifactRepository &&
+                        (it.url.toString() == "https://repo.maven.apache.org/maven2/")
+            }
+            maven { url "https://maven.aliyun.com/nexus/content/groups/public" }
+            maven { url "https://${mirror_maven_url}" }
+        } else {
+            mavenCentral()
+            maven { url "https://maven.minecraftforge.net" }
+        }
     }
     dependencies {
         classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '5.1.+', changing: true
@@ -167,8 +176,13 @@ publishing {
         }
     }
     repositories {
-        maven {
-            url "file:///${project.projectDir}/mcmodsrepo"
+        if (use_mirror == "true") {
+            removeIf {
+                it instanceof MavenArtifactRepository &&
+                        (it.url.toString() == "https://repo.maven.apache.org/maven2/")
+            }
+            maven { url "https://maven.aliyun.com/nexus/content/groups/public" }
+            maven { url "https://${mirror_maven_url}" }
         }
     }
 }
