@@ -3,7 +3,19 @@ loaderVersion="[36,)"
 license="MIT"
 [[mods]]
 modId="bserveressentials"
-version="1.0.0"
+version="1.0"
 displayName="BServerEssentials"
-description='A simple Minecraft mod with custom commands'
-authors="Your Name"
+updateJSONURL="https://youtu.be/dQw4w9WgXcQ"
+displayURL="https://youtu.be/dQw4w9WgXcQ"
+credits="biggymn"
+authors="BIGGYNB on top!!!"
+description='''
+.............................
+'''
+
+[[dependencies.bserveressentials]]
+modId="forge"
+mandatory=true
+versionRange="[36,)"
+ordering="NONE"
+side="BOTH"

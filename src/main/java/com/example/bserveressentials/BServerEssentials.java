@@ -3,6 +3,7 @@ package com.example.bserveressentials;
 import com.example.bserveressentials.commands.CommandSpectator;
 import com.example.bserveressentials.commands.CommandSurvival;
 import com.example.bserveressentials.commands.CommandTpLegit;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegisterCommandsEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -25,6 +26,7 @@ public class BServerEssentials {
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::doClientStuff);
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::onLoadComplete);
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::onDedicatedServerSetup);
+        MinecraftForge.EVENT_BUS.register(this); // Ensure this line is present to register events
     }
 
     private void setup(final FMLCommonSetupEvent event) {

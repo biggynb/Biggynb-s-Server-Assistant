@@ -31,7 +31,7 @@ public class CommandTpLegit {
             ServerPlayerEntity target = playerList.getPlayerByName(targetName);
 
             if (target != null) {
-                player.teleportTo((ServerWorld) target.getCommandSenderWorld(), target.getX(), target.getY(), target.getZ(), 0.0f, 0.0f);
+                player.teleportTo((ServerWorld) target.getCommandSenderWorld(), target.getX(), target.getY(), target.getZ(), player.yRot, player.xRot);
                 player.sendMessage(new StringTextComponent("Teleported to " + targetName), player.getUUID());
             } else {
                 player.sendMessage(new StringTextComponent("Player not found"), player.getUUID());
