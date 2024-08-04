@@ -1,6 +1,7 @@
 package com.example.bserveressentials.commands;
 
 import com.mojang.brigadier.CommandDispatcher;
+import com.mojang.brigadier.arguments.DoubleArgumentType;
 import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
@@ -17,10 +18,14 @@ public class CommandTpLegit {
         dispatcher.register(Commands.literal("tplegit")
                 .requires(cs -> cs.hasPermission(0))
                 .then(Commands.argument("targetName", StringArgumentType.word())
-                        .executes(context -> execute(context))));
+                        .executes(context -> executePlayer(context)))
+                .then(Commands.argument("x", DoubleArgumentType.doubleArg())
+                        .then(Commands.argument("y", DoubleArgumentType.doubleArg())
+                                .then(Commands.argument("z", DoubleArgumentType.doubleArg())
+                                        .executes(context -> executeCoordinates(context))))));
     }
 
-    private static int execute(CommandContext<CommandSource> context) throws CommandSyntaxException {
+    private static int executePlayer(CommandContext<CommandSource> context) throws CommandSyntaxException {
         CommandSource source = context.getSource();
         Entity entity = source.getEntity();
 
@@ -36,6 +41,25 @@ public class CommandTpLegit {
             } else {
                 player.sendMessage(new StringTextComponent("Player not found"), player.getUUID());
             }
+            return 1;
+        } else {
+            source.sendFailure(new StringTextComponent("This command can only be executed by a player"));
+            return 0;
+        }
+    }
+
+    private static int executeCoordinates(CommandContext<CommandSource> context) throws CommandSyntaxException {
+        CommandSource source = context.getSource();
+        Entity entity = source.getEntity();
+
+        if (entity instanceof ServerPlayerEntity) {
+            ServerPlayerEntity player = (ServerPlayerEntity) entity;
+            double x = DoubleArgumentType.getDouble(context, "x");
+            double y = DoubleArgumentType.getDouble(context, "y");
+            double z = DoubleArgumentType.getDouble(context, "z");
+
+            player.teleportTo((ServerWorld) player.getCommandSenderWorld(), x, y, z, player.yRot, player.xRot);
+            player.sendMessage(new StringTextComponent("Teleported to coordinates: " + x + ", " + y + ", " + z), player.getUUID());
             return 1;
         } else {
             source.sendFailure(new StringTextComponent("This command can only be executed by a player"));
